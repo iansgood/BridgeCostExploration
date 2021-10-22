@@ -9,24 +9,27 @@ TI = struct('E',114000,'yeild',830, 'density',4428.78475,'cost',103.04); % in [M
 ABS = struct('E',8200,'yeild',110, 'density',1240,'cost',9.65); % in [MPa] [Mpa], [kg/m^3] , [$/kg] (ABS-GF30 retrieved from efunda, price from German Plastics marketplace pasticker.de)
 %after having made these as structs, I think it might make more sense to
 %just use vectors for each of the different terms
-yeild = [SS.yeild AL.yeild GFRP.yeild TI.yeild ABS.yeild];
-E = [SS.E AL.E GFRP.E TI.E ABS.E];
-
-
+yeild = [SS.yeild AL.yeild GFRP.yeild TI.yeild ABS.yeild]; %in MPa
+E = [SS.E AL.E GFRP.E TI.E ABS.E]; %in MPa
+cost = [SS.cost AL.cost GFRP.cost TI.cost ABS.cost]; % in $/kg
 
 % Bridge Parameters %
-tr = struct('length_cost',0.762,'length_eng',0.635,'width',0.101599,'deflectionMax',0.01905,'loadDist',0.3175,'bridgeLength',18.288,'loadMax',8928.97); %in [m], [m], [m], [m], [m], [m], and [kg/m] 30in , 25in, 4in, 0.75in, 12.5in, 60ft, 500lb/in 
+tr = struct('length',0.635,'width',0.101599,'deflectionMax',0.01905,'loadDist',0.3175,'bridgeLength',18.288,'loadMax',87563.4175); %in [m], [m], [m], [m], [m], and [N/m]. with equivalents of 25in, 4in, 0.75in, 12.5in, 60ft, 500lb/in 
 
 %cost note: don't forget to account for the additional cost of $0.50 / lb
 %over 2lbs/in 
 
 
 % Derived Parameters
-thickness = thickness(tr,yeild,E) % I believe there is an error in my calculations for this
+[tYeild tDef] = thickness(tr,yeild,E); % I believe there is an error in my Yeild calculations in this function
+t = max(tYeild,tDef);
+
+tGroundTruth = [0.0127 0.017272 0.022098]; %in m, from 0.5in, 0.68in, and 0.87in
+tError = abs(tGroundTruth.^2 - t(1:3).^2); %L2 Norm of the difference
 
 
-%%
+%% Costing Function
 
-% write a function that takes in Moment of Inertia, and Bending Moment
+
 
 
