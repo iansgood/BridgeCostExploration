@@ -9,6 +9,10 @@ TI = struct('E',114000,'yeild',830, 'density',4428.78475,'cost',103.04); % in [M
 ABS = struct('E',8200,'yeild',110, 'density',1240,'cost',9.65); % in [MPa] [Mpa], [kg/m^3] , [$/kg] (ABS-GF30 retrieved from efunda, price from German Plastics marketplace pasticker.de)
 %after having made these as structs, I think it might make more sense to
 %just use vectors for each of the different terms
+yeild = [SS.yeild AL.yeild GFRP.yeild TI.yeild ABS.yeild];
+E = [SS.E AL.E GFRP.E TI.E ABS.E];
+
+
 
 % Bridge Parameters %
 tr = struct('length_cost',0.762,'length_eng',0.635,'width',0.101599,'deflectionMax',0.01905,'loadDist',0.3175,'bridgeLength',18.288,'loadMax',8928.97); %in [m], [m], [m], [m], [m], [m], and [kg/m] 30in , 25in, 4in, 0.75in, 12.5in, 60ft, 500lb/in 
@@ -18,7 +22,7 @@ tr = struct('length_cost',0.762,'length_eng',0.635,'width',0.101599,'deflectionM
 
 
 % Derived Parameters
-h_SS = max(height(tr,SS)) % I believe there is an error in my calculations for this
+thickness = thickness(tr,yeild,E) % I believe there is an error in my calculations for this
 
 
 %%
