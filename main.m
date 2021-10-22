@@ -11,19 +11,14 @@ ABS = struct('E',8200,'yeild',110, 'density',1240,'cost',9.65); % in [MPa] [Mpa]
 %just use vectors for each of the different terms
 
 % Bridge Parameters %
-tr = struct('length_cost',0.762,'length_eng',0.635,'width',0.101599,'deflectionMax',0.01905); %in [m], [m], [m] and [m] 30in , 25in, 4in and 0.75in
-loadMax = 8928.97; % in kg/m == 500lb/in
-brLength = 18.288; %in m == 60ft
-loadPt = 0.3175; %in m == 12.5in
+tr = struct('length_cost',0.762,'length_eng',0.635,'width',0.101599,'deflectionMax',0.01905,'loadDist',0.3175,'bridgeLength',18.288,'loadMax',8928.97); %in [m], [m], [m], [m], [m], [m], and [kg/m] 30in , 25in, 4in, 0.75in, 12.5in, 60ft, 500lb/in 
 
 %cost note: don't forget to account for the additional cost of $0.50 / lb
 %over 2lbs/in 
 
 
 % Derived Parameters
-p = tr.width.*loadMax;
-m = p.*tr.length_eng/4;
-h_SS = max(height(tr.deflectionMax,p,tr.length_eng,tr.width,SS.yeild,SS.E)) % I believe there is an error in my calculations for this
+h_SS = max(height(tr,SS)) % I believe there is an error in my calculations for this
 
 
 %%

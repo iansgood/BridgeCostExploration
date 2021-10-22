@@ -1,4 +1,4 @@
-function [h_Str,h_Def] = height(deflection,P,L,b,yeild,E)
+function [h_Str,h_Def] = height(tr,matl)
 %{
  HEIGHT calculates the minimum safe thickness for a beam using yeilding and deflection
  INPUTS
@@ -12,7 +12,11 @@ function [h_Str,h_Def] = height(deflection,P,L,b,yeild,E)
   h_Str is the height required for yeilding to not take place
   h_def is the height required for the deflection criteria to be met
 %}
-h_Str = sqrt(8.* P.*L ./ b.*yeild/1E6); %in m
-h_Def = (P.*L.^3./(4*b.*E/1E6.*deflection)).^1/3; %in m
+
+p = tr.width.*tr.loadMax;
+m = p.*tr.length_eng/4;
+
+h_Str = sqrt(8.* p.*tr.length_eng ./ tr.width.*matl.yeild/1E6); %in m
+h_Def = (p.*tr.length_eng.^3./(4*tr.width.*matl.E/1E6.*tr.deflectionMax)).^1/3; %in m
 end
 
