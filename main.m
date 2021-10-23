@@ -11,16 +11,17 @@ ABS = struct('E',8200,'yeild',110, 'density',1240,'cost',9.65); % in [MPa] [Mpa]
 %just use vectors for each of the different terms
 yeild = [SS.yeild AL.yeild GFRP.yeild TI.yeild ABS.yeild]; %in MPa
 E = [SS.E AL.E GFRP.E TI.E ABS.E]; %in MPa
+density = [SS.density AL.density GFRP.density TI.density ABS.density];
 cost = [SS.cost AL.cost GFRP.cost TI.cost ABS.cost]; % in $/kg
 
 % Bridge Parameters %
-tr = struct('length',0.635,'width',0.101599,'deflectionMax',0.01905,'loadDist',0.3175,'bridgeLength',18.288,'loadMax',87563.4175); %in [m], [m], [m], [m], [m], and [N/m]. with equivalents of 25in, 4in, 0.75in, 12.5in, 60ft, 500lb/in 
+tr = struct('length',0.635,'width',0.101599,'deflectionMax',0.01905,'loadDist',0.3175,'bridgeLength',18.288,'loadMax',87563.4175,'costLength',35.7159346); %in [m], [m], [m], [m], [m], [N/m], and [kg]/m. with equivalents of 25in, 4in, 0.75in, 12.5in, 60ft, 500lb/in, and 2lbs/in. 
 
 %cost note: don't forget to account for the additional cost of $0.50 / lb
 %over 2lbs/in 
 
 
-% Derived Parameters
+% Solve for Thickness
 [tYeild tDef] = thickness(tr,yeild,E); % I believe there is an error in my Yeild calculations in this function
 t = max(tYeild,tDef);
 
@@ -28,7 +29,14 @@ tGroundTruth = [0.0127 0.017272 0.022098]; %in m, from 0.5in, 0.68in, and 0.87in
 tError = abs(tGroundTruth.^2 - t(1:3).^2); %L2 Norm of the difference
 
 
-%% Costing Function
+%% Total Project Cost Function
+
+price = round(bridgeCost(tr,density,t,cost),2); %in USD
+BridgeAlPrice = 5508;
+errorCost = abs(price(2) - BridgeAlPrice);
+disp(errorCost)
+
+
 
 
 

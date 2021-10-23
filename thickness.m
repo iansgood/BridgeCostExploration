@@ -1,6 +1,6 @@
 function [hStr,hDef] = thickness(tr,yeild,E)
 %{
- HEIGHT calculates the minimum safe thickness for a beam using yeilding and deflection
+ thickness calculates the minimum safe thickness for a beam using yeilding and deflection
  INPUTS
     tr is the bridge struct
     yeild is the yeild strength of all materials in vector form
