@@ -15,11 +15,10 @@ massBeam = density.*tr.width.*tr.length.*t;
 % This reduced the error to $30.69
 numTreads = ceil(tr.bridgeLength ./ tr.width);
 costMatl = massBeam.*cost.*numTreads;
-penaltyThreshold = 2; % lb/in
 %if there is a better way to do this, please implement it
 for iter = 1:length(massBeam)
     if massBeam(iter) - tr.costLength .* tr.width > 0 %check if the mass of the beam exceeds 2lbs/(in width)
-        costPenalty(iter)  = numTreads.*(massBeam(iter) -penaltyThreshold.*tr.width).*0.5;
+        costPenalty(iter)  = numTreads.*(massBeam(iter) -tr.costLength.*tr.width).*0.5;
     else
         costPenalty(iter)  = 0;
     end
