@@ -1,6 +1,6 @@
 function [area] = getArea(t,w,gw,x)
 
-% This functions gets the area of the grooved section using thickness,
+% This functions gets the area of the grooved section used in problem 4 using thickness,
 % width, ungrooved width and groove depth ratio x
 
 groove_area = gw*x*t;
