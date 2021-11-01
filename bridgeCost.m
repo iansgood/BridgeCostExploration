@@ -1,4 +1,4 @@
-function [price, massBeam] = bridgeCost(tr,density,t,cost)
+function [price,massBridge,volBridge] = bridgeCost(tr,density,t,cost)
 %{
  bridgeCost calculates the cost of a bridge made from a material and of a
  specified length
@@ -14,7 +14,9 @@ massBeam = density.*tr.width.*tr.length.*t;
 %massBeam(2) = 6.8*0.4536; % checking for rounding error by manually inserting Ram's weight
 % This reduced the error to $30.69
 numTreads = ceil(tr.bridgeLength ./ tr.width);
-costMatl = massBeam.*cost.*numTreads;
+massBridge = massBeam.*numTreads;
+volBridge = massBridge./density;
+costMatl = massBridge.*cost;
 %if there is a better way to do this, please implement it
 for iter = 1:length(massBeam)
     if massBeam(iter) - tr.costLength .* tr.width > 0 %check if the mass of the beam exceeds 2lbs/(in width)
