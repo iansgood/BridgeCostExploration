@@ -1,4 +1,4 @@
-function [price] = bridgeCostCircle(tr,density,t,cost)
+function [price, massBeam] = bridgeCost(tr,density,t,cost)
 %{
  bridgeCost calculates the cost of a bridge made from a material and of a
  specified length
