@@ -35,28 +35,29 @@ tr6 = struct('length',25,'width',6,'deflectionMax',0.75,'loadDist',12.5,'bridgeL
 % Solve for Thickness
 [tYeild3 tDef3] = thickness(tr3,yeild,E);
 t3 = max(tYeild3,tDef3);
-
 [tYeild4 tDef4] = thickness(tr4,yeild,E);
 t4 = max(tYeild4,tDef4);
-
 [tYeild6 tDef6] = thickness(tr6,yeild,E);
 t6 = max(tYeild6,tDef6);
+
 % circular cutouts
 [tYeild3C tDef3C] = thicknessCircle(tr3,yeild,E);
 t3C = max(tYeild3C,tDef3C);
 [tYeild4C tDef4C] = thicknessCircle(tr4,yeild,E);
 t4C = max(tYeild4C,tDef4C);
-
+[tYeild6C tDef6C] = thicknessCircle(tr6,yeild,E);
+t6C = max(tYeild6C,tDef6C);
 
 
 %% Total Project Cost Function
-price3 = round(bridgeCost(tr3,density,t3,cost),2); %in USD
-price4 = round(bridgeCost(tr4,density,t4,cost),2); %in USD
-price6 = round(bridgeCost(tr6,density,t6,cost),2); %in USD
+[price3,mass3] = bridgeCost(tr3,density,t3,cost); %in USD
+[price4,mass4] = bridgeCost(tr4,density,t4,cost); %in USD
+[price6,mass6] = bridgeCost(tr6,density,t6,cost); %in USD
 
 %Circular cutouts
-price3C = round(bridgeCostCircle(tr3,density,t3C,cost),2); %in USD
-price4C = round(bridgeCostCircle(tr4,density,t4C,cost),2); %in USD
+[price3C,mass3C] = bridgeCostCircle(tr3,density,t3C,cost); %in USD
+[price4C,mass4C] = bridgeCostCircle(tr4,density,t4C,cost); %in USD
+[price6C,mass6C] = bridgeCostCircle(tr6,density,t6C,cost); %in USD
 
 
 

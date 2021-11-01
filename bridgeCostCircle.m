@@ -1,4 +1,4 @@
-function [price] = bridgeCost(tr,density,t,cost)
+function [price, massBeam] = bridgeCost(tr,density,t,cost)
 %{
  bridgeCost calculates the cost of a bridge made from a material and of a
  specified length
@@ -15,7 +15,10 @@ if tr.width == 3
     massBeam = density.*31.938091.*t; %in lbs. Area taken from Solidworks Model    
 elseif tr.width == 4
     massBeam = density.*39.119370.*t; %in lbs. Area taken from Solidworks Model
-
+elseif tr.width == 6
+    massBeam = density.*57.920116.*t; %in lbs. Area taken from Solidworks Model
+else
+    e = error(1,'not supported width, try 3, 4, or 6in');
 end    
 
 numTreads = ceil(tr.bridgeLength ./ tr.width);

@@ -24,7 +24,13 @@ elseif tr.width == 4
     hDef = nthroot(     (p.*tr.length.^3) ./ (4.*E.*10.^6.*tr.deflectionMax)     ,3); %in m
     % cube root((lb*in^3/(4*in*in*Mlb/in^2)) = cube root((lb*in/(4*Mlb/in^2)) =
     % inch upon converting E to lb
+elseif tr.width == 6
+    hStr = sqrt(   (2.*p.*tr.length) ./ (yeild.*1000)  ); % in
+    % sqrt((lb * in)/(in*(klb/in^2))) = in upon converting yield to lb
+    hDef = nthroot(     (p.*tr.length.^3) ./ (3.*E.*10.^6.*tr.deflectionMax)     ,3); %in m
+    % cube root((lb*in^3/(4*in*in*Mlb/in^2)) = cube root((lb*in/(4*Mlb/in^2)) =
+    % inch upon converting E to lb
 else
-e = error(1,'not supported width, try 3 or 4in');
+e = error(1,'not supported width, try 3, 4, or 6in');
 end
 
