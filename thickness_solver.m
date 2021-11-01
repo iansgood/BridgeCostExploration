@@ -1,5 +1,6 @@
 function [thickness_necessary] = thickness_solver(x,w,P,E,L,S,d,gw)
 
+% Problem 4 thickness solver:
 % This function takes the inputs of groove depth ratio x, tread width w (either 3
 % or 4 inches), load (load per width), Young's modulus E, tread length L,
 % yield strength S, max deflection d, and total groove width gw and then 
