@@ -10,6 +10,7 @@ function [price] = bridgeCost(tr,density,t,cost)
   OUTPUTS
   price is the cost to build a bridge from the material
 %}
+cost = cost + 0.2*ones(length(cost),1); % add the additional cost to produce
 if tr.width == 3
     massBeam = density.*31.938091.*t; %in lbs. Area taken from Solidworks Model    
 elseif tr.width == 4
