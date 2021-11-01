@@ -24,28 +24,42 @@ cost = [SS.cost AL.cost GFRP.cost TI.cost ABS.cost]; % in $/lb
 
 % Bridge Parameters %
 fttoinch = 12; % inches per foot
-tr = struct('length',25,'width',4,'deflectionMax',0.75,'loadDist',12.5,'bridgeLength',60*fttoinch,'loadMax',500,'costLength',2); %in in, in, in, in, in, lb/in, and lb/in. 
+tr3 = struct('length',25,'width',3,'deflectionMax',0.75,'loadDist',12.5,'bridgeLength',60*fttoinch,'loadMax',500,'costLength',2); %in in, in, in, in, in, lb/in, and lb/in. 
+tr4 = struct('length',25,'width',4,'deflectionMax',0.75,'loadDist',12.5,'bridgeLength',60*fttoinch,'loadMax',500,'costLength',2); %in in, in, in, in, in, lb/in, and lb/in. 
+tr6 = struct('length',25,'width',6,'deflectionMax',0.75,'loadDist',12.5,'bridgeLength',60*fttoinch,'loadMax',500,'costLength',2); %in in, in, in, in, in, lb/in, and lb/in. 
 
 %cost note: don't forget to account for the additional cost of $0.50 / lb
 %over 2lbs/in 
 
 
 % Solve for Thickness
-[tYeild tDef] = thickness(tr,yeild,E); % I believe there is an error in my Yeild calculations in this function
-t = max(tYeild,tDef);
+[tYeild3 tDef3] = thickness(tr3,yeild,E);
+t3 = max(tYeild3,tDef3);
 
-tGroundTruth = [0.5 0.68 0.87]; %in in
-tError = abs(tGroundTruth.^2 - t(1:3).^2); %L2 Norm of the difference
+[tYeild4 tDef4] = thickness(tr4,yeild,E);
+t4 = max(tYeild4,tDef4);
+
+[tYeild6 tDef6] = thickness(tr6,yeild,E);
+t6 = max(tYeild6,tDef6);
+% circular cutouts
+[tYeild3C tDef3C] = thicknessCircle(tr3,yeild,E);
+t3C = max(tYeild3C,tDef3C);
+[tYeild4C tDef4C] = thicknessCircle(tr4,yeild,E);
+t4C = max(tYeild4C,tDef4C);
+
 
 
 %% Total Project Cost Function
+price3 = round(bridgeCost(tr3,density,t3,cost),2); %in USD
+price4 = round(bridgeCost(tr4,density,t4,cost),2); %in USD
+price6 = round(bridgeCost(tr6,density,t6,cost),2); %in USD
 
-price = round(bridgeCost(tr,density,t,cost),2); %in USD
-BridgeAlPrice = 5508; 
-errorCost = abs(price(2) - BridgeAlPrice);
-disp(errorCost) % this difference is fully accounted for by the key rounding
-% the height. 5508-4.5*0.1*4*25*sqrt(18.75/40)*0.25*12*60 = 37.69
-% (approximately)
+%Circular cutouts
+price3C = round(bridgeCostCircle(tr3,density,t3C,cost),2); %in USD
+price4C = round(bridgeCostCircle(tr4,density,t4C,cost),2); %in USD
+
+
+
 
 
 
