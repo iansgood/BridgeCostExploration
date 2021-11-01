@@ -1,6 +1,6 @@
 function [cost_vector] = getCost(weight,cost,penalty,width,span)
 %Calculating the cost using the weight and the cost per weight, while
-%assessing a penalty for weight greater than 2lbs/in
+%assessing a penalty for weight greater than 2lbs/in, used in problem 4
 
 cost_before_penalty = weight*cost;
 
